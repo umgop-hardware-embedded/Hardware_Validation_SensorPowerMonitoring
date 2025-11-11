@@ -1,0 +1,6 @@
+{
+    "cmake.sourceDirectory": "/Users/umeshgopi/power/temperature_power_test/final_temp_simplified",
+    "nrf-connect.applications": [
+        "${workspaceFolder}/final_temp_simplified"
+    ]
+}
