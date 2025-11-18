@@ -9,5 +9,11 @@ To validate whether reduced transmissions translate to real power savings and ex
 
 These results show that the power baseline and transmission frequency dominate total power consumption and produce a clear crossover: maintaining a continuous connection is more efficient for short transmission intervals, while disconnect–reconnect becomes more efficient at longer intervals. More info can be found on our paper: Data Trickles: A Study on Reducing Transmissions
 for Live, Low-Data-Rate Data Streams.
+<img width="319" height="239" alt="Screenshot 2025-11-13 at 11 26 12 PM" src="https://github.com/user-attachments/assets/e4e96cc1-d090-4020-8e8c-1c63b9368a0e" />
+<img width="525" height="222" alt="Screenshot 2025-11-13 at 4 53 26 PM" src="https://github.com/user-attachments/assets/e8c6afbd-1b2b-42c8-9c6c-ade53df2aaf5" />
+
 
 </details>
+
+<details>
+<strong>SideWalk Implementation</strong>
