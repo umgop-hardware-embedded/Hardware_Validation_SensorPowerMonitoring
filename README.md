@@ -1,95 +1,32 @@
-To understand the real-world impact of reducing upload frequency, we validated our algorithmic results on physical hardware. While the earlier experiments rely on publicly available datasets, IoT deployments impose strict constraints on battery life, communication overhead, and radio duty cycle. The goal of this section is to translate compression behavior into actual sensor lifetime by measuring the power required to sample and transmit temperature data on a real BLE system.
+Hardware Validation Summary
+To understand the real-world impact of reducing upload frequency, we validated our algorithmic results on physical hardware. While earlier experiments used publicly available datasets, real IoT deployments impose strict constraints on battery life and radio duty cycle. This section connects compression behavior to actual sensor lifetime by measuring power consumption on a real BLE platform.
+We implemented a prototype using two Nordic nRF52840 development boards—one acting as a BLE peripheral (sensor) and the other as a central (receiver). The peripheral sampled temperature data and transmitted readings using two connectivity modes:
+Continuous BLE: the sensor maintains an active connection at all times
 
-We implemented a prototype using two Nordic nRF52840 development boards—one acting as a BLE peripheral (sensor) and the other as a central (receiver). The peripheral sampled its onboard temperature sensor and transmitted readings using two connectivity modes:
 
-Continuous BLE, where the sensor maintains an active connection at all times
+Disconnect–Reconnect BLE: the sensor sends a packet, powers down the radio, and reconnects only for the next upload
 
-Disconnect–Reconnect BLE, where the sensor sends a packet, turns the radio fully off, and reconnects only for the next transmission
 
-To characterize how sampling and upload rates contribute to energy usage, we systematically varied both:
-the sampling frequency 
-𝑓
-sample
-f
-sample
-	​
+To quantify how sampling and upload behavior affect energy usage, we systematically varied:
+Sampling frequency fsamplef_{\text{sample}}fsample​
 
-, and the upload frequency 
-𝑓
-upload
-f
-upload
-	​
 
-. Each configuration was measured using Nordic’s Power Profiler Kit II (PPK2), which provided high-resolution current traces for both low-power idle periods and short, high-current transmission spikes.
+Upload frequency fuploadf_{\text{upload}}fupload​
 
-For each 
-(
-𝑓
-sample
-,
-𝑓
-upload
-)
-(f
-sample
-	​
 
-,f
-upload
-	​
+Each configuration was measured using Nordic’s Power Profiler Kit II (PPK2), allowing us to capture both low-power idle phases and short, high-current transmission spikes.
+For every (fsample,fupload)(f_{\text{sample}}, f_{\text{upload}})(fsample​,fupload​) pair, we recorded the average current PavgP_{\text{avg}}Pavg​ and fit the linear model:
+Pavg=Pbase+fsampleCs+fuploadCu.P_{\text{avg}} = P_{\text{base}} + f_{\text{sample}} C_s + f_{\text{upload}} C_u.Pavg​=Pbase​+fsample​Cs​+fupload​Cu​.
+From this, we extracted:
+PbaseP_{\text{base}}Pbase​ — baseline system power
 
-) pair, we collected the average current 
-𝑃
-avg
-P
-avg
-	​
 
- and fit the linear model:
+CsC_sCs​ — incremental sampling cost
 
-𝑃
-avg
-=
-𝑃
-base
-+
-𝑓
-sample
-𝐶
-𝑠
-+
-𝑓
-upload
-𝐶
-𝑢
-.
-P
-avg
-	​
 
-=P
-base
-	​
+CuC_uCu​ — incremental upload cost
 
-+f
-sample
-	​
 
-C
-s
-	​
+These coefficients were then used to estimate the average power—and resulting battery lifetime—for each smoothing/modeling algorithm evaluated earlier.
+In summary: reducing upload frequency is the dominant factor in lowering average current draw, and therefore significantly extends battery life in BLE-based IoT sensors.
 
-+f
-upload
-	​
-
-C
-u
-	​
-
-.
-
-This allowed us to extract the baseline system consumption, the incremental sampling cost, and the cost of each BLE upload for both connectivity strategies. Using these coefficients, we then estimated the average power (and resulting battery lifetime) for every smoothing/modeling algorithm evaluated earlier in the paper.
-
-In short, this hardware validation provides the practical link between algorithmic compression performance and real IoT deployment constraints: lower transmission frequency directly reduces average current draw, extending sensor lifetime—often by years.
